@@ -33,6 +33,4 @@ solve xs | head xs == "S" = unwords $ split (xs !! 2) [] ""
 
 
 main :: IO ()
-main = do 
-    x <- getContents
-    putStrLn $ (unlines . map (solve . splitBySemicolon) . lines) x
+main = interact $ unlines . map (solve . splitBySemicolon) . lines
