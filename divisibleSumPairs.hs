@@ -1,17 +1,18 @@
-cartProd :: [a] -> [b] -> [(a, b)]
-cartProd xs ys = [(x,y) | x <- xs, y <- ys]
+pairs :: Int -> [(Int, Int)]
+pairs n = [(i,j) | i <- [0..n-1], j <- [0..n-1]]
 
 
-isValidPair :: Int -> (Int, Int) -> Bool
-isValidPair k (i, j) = i < j && (i + j) `mod` k == 0
+isValidPair :: Int -> [Int] -> (Int, Int) -> Bool
+isValidPair k ar (i, j) = i < j && ((ar !! i) + (ar !! j)) `mod` k == 0
 
 
-solve :: [Int] -> Int -> Int
-solve xs k = length $ filter (isValidPair k) (cartProd xs xs)
+solve :: [Int] -> Int -> Int -> Int
+solve ar n k = length $ filter (isValidPair k ar) (pairs n)
 
 
 main :: IO ()
 main = do
     nk <- getLine
-    arr <- getLine
-    print (solve (map read $ words arr) (read $ last $ words nk))
+    ar <- getLine
+    let (n:k:_) = map read $ words nk
+    print (solve (map read $ words ar) n k)
